@@ -17,7 +17,7 @@
 		"composer/composer": "1.*"
 	},
 	"autoload": {
-		"classmap": ["src/Atomita/Composer/Plugin/Wordpress"]
+		"psr-0": {"Atomita": ["src/"]}
 	},
 	"extra": {
 		"class": "\\Atomita\\Composer\\Plugin\\Wordpress\\EnvironmentConfig"
