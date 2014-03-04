@@ -116,7 +116,8 @@ EOD;
 
 // @end generated
 
-EOD;
+EOD
+				);
 			}
 			
 			// generate environment.php
@@ -128,7 +129,8 @@ EOD;
 
 // @end generated
 
-EOD;
+EOD
+			);
 			
 			// copy wp-config-sample.php
 			$sample_path = $filesystem->normalizePath($wp_dir . '/wp-config-sample.php');
