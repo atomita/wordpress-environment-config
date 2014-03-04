@@ -34,7 +34,7 @@ if (!defined('ABSPATH')){
 }
 
 // environment
-if (include(dirname(__FILE__) . '/environment.php')){
+if (include(dirname(__FILE__) . '/wp-environment-config.php')){
     return;
 }
 EOD;
@@ -122,7 +122,7 @@ EOD
 				}
 			
 				// generate environment.php
-				file_put_contents($wp_dir . '/environment.php', <<<EOD
+				file_put_contents($wp_dir . '/wp-environment-config.php', <<<EOD
 <?php
 
 // {$this->banner}
