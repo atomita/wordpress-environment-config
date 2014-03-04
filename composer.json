@@ -1,0 +1,25 @@
+{
+	"name": "atomita/wp-environment-config",
+	"description": "",
+	"type": "composer-plugin",
+	"keywords": ["plugin", "wordpress", "environment"],
+	"license": "LGPLv3",
+	"authors": [
+		{
+			"name": "atomita"
+		}
+	],
+	"version": "0.0.1",
+	"require": {
+		"composer-plugin-api": "*"
+	},
+	"require-dev": {
+		"composer/composer": "1.*"
+	},
+	"autoload": {
+		"classmap": ["src/Atomita/Composer/Plugin/Wordpress"]
+	},
+	"extra": {
+		"class": "\\Atomita\\Composer\\Plugin\\Wordpress\\EnvironmentConfig"
+	}
+}
