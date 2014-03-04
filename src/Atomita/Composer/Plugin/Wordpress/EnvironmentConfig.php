@@ -28,7 +28,7 @@ switch (\$_SERVER['SERVER_NAME']){
 }
 EOD;
 
-	protected $call_environment = <<< EOD
+	protected $call_environment = <<<EOD
 if (!defined('ABSPATH')){
 	define('ABSPATH', dirname(__FILE__) . '/');
 }
@@ -39,7 +39,7 @@ if (include(dirname(__FILE__) . '/environment.php')){
 }
 EOD;
 
-	protected $process_environment = <<EOD
+	protected $process_environment = <<<EOD
 if (defined('ENVIRONMENT')) {
 	\$env = ENVIRONMENT;
 }
