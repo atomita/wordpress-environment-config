@@ -90,19 +90,20 @@ EOD;
 
 	public function onPostInstallCommand(ScriptEvent $event)
 	{
-		$config = $event->getComposer()->getConfig();
+		$composer = $event->getComposer();
+		$config   = $composer->getConfig();
 		
 		$filesystem	 = new Filesystem();
-		// $vendor_path = $filesystem->normalizePath(realpath($config->get('vendor-dir')));
+
+		if ($composer->getPackage()){
+			$extra = $composer->getPackage()->getExtra();
 		
-		$extra = $config->get('extra');
-		
-		if (isset($extra['webroot-dir'])){
-			$wp_dir		 = $filesystem->normalizePath($extra['webroot-dir']);
-			$config_path = $filesystem->normalizePath($wp_dir . '/wp-config.php');
+			if (isset($extra['webroot-dir'])){
+				$wp_dir		 = $filesystem->normalizePath($extra['webroot-dir']);
+				$config_path = $filesystem->normalizePath($wp_dir . '/wp-config.php');
 			
-			if (!file_exists($config_path) or false === strpos(file_get_contents($config_path), $this->banner)){
-				file_put_contents($config_path, <<<EOD
+				if (!file_exists($config_path) or false === strpos(file_get_contents($config_path), $this->banner)){
+					file_put_contents($config_path, <<<EOD
 <?php
 
 {$this->servername_switch}
@@ -117,11 +118,11 @@ EOD;
 // @end generated
 
 EOD
-				);
-			}
+					);
+				}
 			
-			// generate environment.php
-			file_put_contents($wp_dir . '/environment.php', <<<EOD
+				// generate environment.php
+				file_put_contents($wp_dir . '/environment.php', <<<EOD
 <?php
 {$this->banner}
 
@@ -130,15 +131,16 @@ EOD
 // @end generated
 
 EOD
-			);
+				);
 			
-			// copy wp-config-sample.php
-			$sample_path = $filesystem->normalizePath($wp_dir . '/wp-config-sample.php');
+				// copy wp-config-sample.php
+				$sample_path = $filesystem->normalizePath($wp_dir . '/wp-config-sample.php');
 			
-			foreach (array('production', 'staging', 'development', 'local') as $env){
-				if (!file_exists($filesystem->normalizePath($path = "{$wp_dir}/{$env}/wp-config-sample.php"))){
-					$filesystem->ensureDirectoryExists("{$extra['webroot-dir']}/{$env}");
-					copy($sample_path, $path);
+				foreach (array('production', 'staging', 'development', 'local') as $env){
+					if (!file_exists($filesystem->normalizePath($path = "{$wp_dir}/{$env}/wp-config-sample.php"))){
+						$filesystem->ensureDirectoryExists("{$extra['webroot-dir']}/{$env}");
+						copy($sample_path, $path);
+					}
 				}
 			}
 		}
