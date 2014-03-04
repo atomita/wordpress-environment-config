@@ -106,7 +106,7 @@ EOD;
 					file_put_contents($config_path, <<<EOD
 <?php
 
-{$this->servername_switch}
+// {$this->servername_switch}
 
 ?>
 <?php
@@ -124,7 +124,8 @@ EOD
 				// generate environment.php
 				file_put_contents($wp_dir . '/environment.php', <<<EOD
 <?php
-{$this->banner}
+
+// {$this->banner}
 
 {$this->process_environment}
 
