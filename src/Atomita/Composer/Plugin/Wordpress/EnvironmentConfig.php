@@ -106,12 +106,12 @@ EOD;
 					file_put_contents($config_path, <<<EOD
 <?php
 
-// {$this->servername_switch}
+{$this->servername_switch}
 
 ?>
 <?php
 
-{$this->banner}
+// {$this->banner}
 
 {$this->call_environment}
 
