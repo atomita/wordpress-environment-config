@@ -44,9 +44,13 @@ if (defined('ENVIRONMENT')) {
 	\$env = ENVIRONMENT;
 }
 else {
-	if (empty(\$env = \$_SERVER['EXECUTION_ENVIRONMENT'])
-	and empty(\$env = \$_SERVER['REDIRECT_EXECUTION_ENVIRONMENT'])){
-
+	if (!empty(\$_SERVER['EXECUTION_ENVIRONMENT'])){
+		\$env = \$_SERVER['EXECUTION_ENVIRONMENT'];
+	}
+	else if (!empty(\$_SERVER['REDIRECT_EXECUTION_ENVIRONMENT'])){
+		\$env = \$_SERVER['REDIRECT_EXECUTION_ENVIRONMENT'];
+	}
+	else{
 		if (false !== strpos(\$_SERVER['SERVER_NAME'], 'localhost')){
 			\$env = 'local';
 		}
