@@ -141,7 +141,7 @@ EOD
 				);
 			
 				// copy wp-config-sample.php
-				$filesystem->ensureDirectoryExists($wp_config);
+				$filesystem->ensureDirectoryExists($wp_config_dir);
 			
 				foreach (array('production', 'staging', 'development', 'local') as $env){
 					if (!file_exists($filesystem->normalizePath($path = "{$wp_config_dir}/{$env}/wp-config-sample.php"))){
