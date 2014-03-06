@@ -64,7 +64,7 @@ else {
 }
 
 
-\$environment_config_file = dirname(__FILE__) . "/{\$env}/wp-config.php";
+\$environment_config_file = dirname(__FILE__) . "/wp-environment-config/{\$env}/wp-config.php";
 if (file_exists(\$environment_config_file)) {
 	include \$environment_config_file;
 	return true;
@@ -103,11 +103,13 @@ EOD;
 			$extra = $composer->getPackage()->getExtra();
 		
 			if (isset($extra['webroot-dir'])){
-				$wp_dir		 = $filesystem->normalizePath($extra['webroot-dir']);
-				$config_path = $filesystem->normalizePath($wp_dir . '/wp-config.php');
-			
-				if (!file_exists($config_path) or false === strpos(file_get_contents($config_path), $this->banner)){
-					file_put_contents($config_path, <<<EOD
+				$wp_dir			  = $extra['webroot-dir'];
+				$wp_config_dir	  = "{$wp_dir}/wp-environment-config";
+				$wp_config		  = $filesystem->normalizePath($wp_dir . '/wp-config.php');
+				$wp_config_sample = $filesystem->normalizePath($wp_dir . '/wp-config-sample.php');
+				
+				if (!file_exists($wp_config) or false === strpos(file_get_contents($wp_config), $this->banner)){
+					file_put_contents($wp_config, <<<EOD
 <?php
 
 {$this->servername_switch}
@@ -125,8 +127,8 @@ EOD
 					);
 				}
 			
-				// generate environment.php
-				file_put_contents($wp_dir . '/wp-environment-config.php', <<<EOD
+				// generate wp-environment-config.php
+				file_put_contents($filesystem->normalizePath($wp_dir . '/wp-environment-config.php'), <<<EOD
 <?php
 
 // {$this->banner}
@@ -139,12 +141,12 @@ EOD
 				);
 			
 				// copy wp-config-sample.php
-				$sample_path = $filesystem->normalizePath($wp_dir . '/wp-config-sample.php');
+				$filesystem->ensureDirectoryExists($wp_config);
 			
 				foreach (array('production', 'staging', 'development', 'local') as $env){
-					if (!file_exists($filesystem->normalizePath($path = "{$wp_dir}/{$env}/wp-config-sample.php"))){
-						$filesystem->ensureDirectoryExists("{$extra['webroot-dir']}/{$env}");
-						copy($sample_path, $path);
+					if (!file_exists($filesystem->normalizePath($path = "{$wp_config_dir}/{$env}/wp-config-sample.php"))){
+						$filesystem->ensureDirectoryExists("{$wp_config_dir}/{$env}");
+						copy($wp_config_sample, $path);
 					}
 				}
 			}
