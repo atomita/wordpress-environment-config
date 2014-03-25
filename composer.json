@@ -1,5 +1,5 @@
 {
-	"name": "atomita/wp-environment-config",
+	"name": "atomita/wordpress-environment-config",
 	"description": "",
 	"type": "composer-plugin",
 	"keywords": ["plugin", "wordpress", "environment"],
